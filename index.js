@@ -311,3 +311,19 @@ var convert = function(s, numRows) {
 
 
   // leiaaaaa
+  // 给你 n 个非负整数 a1，a2，...，an，每个数代表坐标中的一个点 (i, ai) 。在坐标内画 n 条垂直线，垂直线 i 的两个端点分别为 (i, ai) 和 (i, 0) 。找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。
+
+  /**
+ * @param {number[]} height
+ * @return {number}
+ */
+var maxArea = function(height) {
+  let max = 0;
+  for (let i = 0, j = height.length - 1; i < j;) {//双指针i，j循环height数组
+      //i，j较小的那个先向内移动 如果高的指针先移动，那肯定不如当前的面积大
+      const minHeight = height[i] < height[j] ? height[i++] : height[j--];
+      const area = (j - i + 1) * minHeight;//计算面积
+      max = Math.max(max, area);//更新最大面积
+  }
+  return max;
+};
