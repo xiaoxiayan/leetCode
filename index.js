@@ -179,26 +179,25 @@
  * @param {string}
  * @return {number}
  */
-var lengthOfLongestSubstring = function(s) {
-    let maxLength = 0
-    if(s === '') {
-        return maxLength
-    } else {
-        // 原始数组
-        let newArr = []
-        for(let i = 0; i <s.length; i++ ){
-            if(newArr.indexOf(s[i]) !== -1 ) {
-                // 如果重复了。应该把直到那个位置的内容删除
-                newArr.splice(0, newArr.indexOf(s[i]) + 1);
-            }
-            newArr.push(s[i])
-            maxLength = Math.max(maxLength, newArr.length)
+// var lengthOfLongestSubstring = function(s) {
+//     let maxLength = 0
+//     if(s === '') {
+//         return maxLength
+//     } else {
+//         // 原始数组
+//         let newArr = []
+//         for(let i = 0; i <s.length; i++ ){
+//             if(newArr.indexOf(s[i]) !== -1 ) {
+//                 // 如果重复了。应该把直到那个位置的内容删除
+//                 newArr.splice(0, newArr.indexOf(s[i]) + 1);
+//             }
+//             newArr.push(s[i])
+//             maxLength = Math.max(maxLength, newArr.length)
 
-        }
-    }
-    return maxLength
-};
-console.log(lengthOfLongestSubstring('avdlvhf'))
+//         }
+//     }
+//     return maxLength
+// };
 // var lengthOfLongestSubstring = function(s) {
 //     // 哈希集合，记录每个字符是否出现过
 //     const occ = new Set();
@@ -252,14 +251,14 @@ console.log(lengthOfLongestSubstring('avdlvhf'))
 //  给定两个大小分别为 m 和 n 的正序（从小到大）数组 nums1 和 nums2。请你找出并返回这两个正序数组的 中位数 。
 
 //  算法的时间复杂度应该为 O(log (m+n)) 。
- var findMedianSortedArrays = function(nums1, nums2) {
-    // 融合排序，然后寻找中位数
-    let arr = nums1.concat(nums2).sort(function(a, b){return a - b})
-    // 中位数分为 偶数 和 奇数的中位。偶数就是取 值的 max && min ，奇数就是取中间
-    let midIndex = arr.length/2
-    return !!(arr.length%2) ? (arr[Math.floor(midIndex)]) : ((arr[midIndex] + arr[midIndex -1] )/2)
+//  var findMedianSortedArrays = function(nums1, nums2) {
+//     // 融合排序，然后寻找中位数
+//     let arr = nums1.concat(nums2).sort(function(a, b){return a - b})
+//     // 中位数分为 偶数 和 奇数的中位。偶数就是取 值的 max && min ，奇数就是取中间
+//     let midIndex = arr.length/2
+//     return !!(arr.length%2) ? (arr[Math.floor(midIndex)]) : ((arr[midIndex] + arr[midIndex -1] )/2)
 
-};
+// };
 // 6. Z 字形变换
 //
 /***
@@ -275,7 +274,7 @@ Y   I   R
 请你实现这个将字符串进行指定行数变换的函数：
 
  */
-
+/*
 var convert = function(s, numRows) {
   if(numRows === 1) {
     // 只有一行直接返回
@@ -308,7 +307,7 @@ var convert = function(s, numRows) {
   }
   return res
   };
-
+**/
 
   // leiaaaaa
   // 给你 n 个非负整数 a1，a2，...，an，每个数代表坐标中的一个点 (i, ai) 。在坐标内画 n 条垂直线，垂直线 i 的两个端点分别为 (i, ai) 和 (i, 0) 。找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。
@@ -316,7 +315,7 @@ var convert = function(s, numRows) {
   /**
  * @param {number[]} height
  * @return {number}
- */
+ 
 var maxArea = function(height) {
   let max = 0;
   for (let i = 0, j = height.length - 1; i < j;) {//双指针i，j循环height数组
@@ -327,3 +326,46 @@ var maxArea = function(height) {
   }
   return max;
 };
+*/
+// 给你一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0 ？请你找出所有和为 0 且不重复的三元组。
+
+// let arr = [-1,0,1,2,-1,-4]
+// console.log(arr.sort((a, b) => {
+//   return a - b
+// }))
+//  [-4, -1, -1, 0, 1, 2,]
+//  双指针，如果 走到 0 还没结果，那就回到原点， i ++ 
+/**
+ * @param {number[]} nums
+ * @return {number[][]}
+ */
+ var threeSum = function(nums) {
+  if(nums == null || len < 3) return [];
+  //  排序
+  nums = nums.sort((a, b)=> {
+    return a - b
+  })
+  let res = new Set()
+  for (let i = 0; i < nums.length; i++ ) {
+      if(nums[i] > 0) break; //如果当前数大于0 ，那么三字相加必定大于零
+      if(i> 0 && nums[i] === nums[ (i-1) ]) continue // 去重
+      let L = i + 1
+      let R = nums.length - 1 
+      while(L < R) {
+         const sum = nums[i] + nums[L] + nums[R]
+         if( sum === 0 ){
+           res.add([nums[i] + nums[L] + nums[R]])
+           while (L<R && nums[L] == nums[L+1]) L++; // 去重 进入到这边的时候已经匹配到 nums[L],所以后面的 L就是重复的
+           while (L<R && nums[R] == nums[R-1]) R--; // 去重
+           L++
+           R--
+         } else if (sum < 0) {
+           L++
+         } else if (sum > 0 ) {
+           R--
+         }
+      }
+  }
+  return res  
+};
+console.log(threeSum([-1,0,1,2,-1,-4]))
