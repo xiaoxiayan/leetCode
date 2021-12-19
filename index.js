@@ -339,33 +339,56 @@ var maxArea = function(height) {
  * @param {number[]} nums
  * @return {number[][]}
  */
- var threeSum = function(nums) {
-  if(nums == null || len < 3) return [];
-  //  排序
-  nums = nums.sort((a, b)=> {
-    return a - b
-  })
-  let res = new Set()
-  for (let i = 0; i < nums.length; i++ ) {
-      if(nums[i] > 0) break; //如果当前数大于0 ，那么三字相加必定大于零
-      if(i> 0 && nums[i] === nums[ (i-1) ]) continue // 去重
-      let L = i + 1
-      let R = nums.length - 1 
-      while(L < R) {
-         const sum = nums[i] + nums[L] + nums[R]
-         if( sum === 0 ){
-           res.add([nums[i] + nums[L] + nums[R]])
-           while (L<R && nums[L] == nums[L+1]) L++; // 去重 进入到这边的时候已经匹配到 nums[L],所以后面的 L就是重复的
-           while (L<R && nums[R] == nums[R-1]) R--; // 去重
-           L++
-           R--
-         } else if (sum < 0) {
-           L++
-         } else if (sum > 0 ) {
-           R--
-         }
+//  var threeSum = function(nums) {
+//   if(nums == null || len < 3) return [];
+//   //  排序
+//   nums = nums.sort((a, b)=> {
+//     return a - b
+//   })
+//   let res = new Set()
+//   for (let i = 0; i < nums.length; i++ ) {
+//       if(nums[i] > 0) break; //如果当前数大于0 ，那么三字相加必定大于零
+//       if(i> 0 && nums[i] === nums[ (i-1) ]) continue // 去重
+//       let L = i + 1
+//       let R = nums.length - 1 
+//       while(L < R) {
+//          const sum = nums[i] + nums[L] + nums[R]
+//          if( sum === 0 ){
+//            res.add([nums[i] + nums[L] + nums[R]])
+//            while (L<R && nums[L] == nums[L+1]) L++; // 去重 进入到这边的时候已经匹配到 nums[L],所以后面的 L就是重复的
+//            while (L<R && nums[R] == nums[R-1]) R--; // 去重
+//            L++
+//            R--
+//          } else if (sum < 0) {
+//            L++
+//          } else if (sum > 0 ) {
+//            R--
+//          }
+//       }
+//   }
+//   return res  
+// };
+// console.log(threeSum([-1,0,1,2,-1,-4]))
+var letterCombinations = function(digits) {
+  const k = digits.length;
+  const map = ["","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"];
+  if(!k) return [];
+  if(k === 1) return map[digits].split("");
+
+  const res = [], path = [];
+  backtracking(digits, k, 0);
+  return res;
+
+  function backtracking(n, k, a) {
+      if(path.length === k) {
+          res.push(path.join(""));
+          return;
       }
+      for(const v of map[n[a]]) {
+          path.push(v);
+          backtracking(n, k, a + 1);
+          path.pop();
+      }
+
   }
-  return res  
 };
-console.log(threeSum([-1,0,1,2,-1,-4]))
