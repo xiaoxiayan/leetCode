@@ -315,7 +315,7 @@ var convert = function(s, numRows) {
   /**
  * @param {number[]} height
  * @return {number}
- 
+
 var maxArea = function(height) {
   let max = 0;
   for (let i = 0, j = height.length - 1; i < j;) {//双指针i，j循环height数组
@@ -334,7 +334,7 @@ var maxArea = function(height) {
 //   return a - b
 // }))
 //  [-4, -1, -1, 0, 1, 2,]
-//  双指针，如果 走到 0 还没结果，那就回到原点， i ++ 
+//  双指针，如果 走到 0 还没结果，那就回到原点， i ++
 /**
  * @param {number[]} nums
  * @return {number[][]}
@@ -350,7 +350,7 @@ var maxArea = function(height) {
 //       if(nums[i] > 0) break; //如果当前数大于0 ，那么三字相加必定大于零
 //       if(i> 0 && nums[i] === nums[ (i-1) ]) continue // 去重
 //       let L = i + 1
-//       let R = nums.length - 1 
+//       let R = nums.length - 1
 //       while(L < R) {
 //          const sum = nums[i] + nums[L] + nums[R]
 //          if( sum === 0 ){
@@ -366,9 +366,21 @@ var maxArea = function(height) {
 //          }
 //       }
 //   }
-//   return res  
+//   return res
 // };
 // console.log(threeSum([-1,0,1,2,-1,-4]))
+// 17. 电话号码的字母组合
+// 给定一个仅包含数字 2-9 的字符串，返回所有它能表示的字母组合。答案可以按 任意顺序 返回。
+
+// 给出数字到字母的映射如下（与电话按键相同）。注意 1 不对应任何字母。
+/**
+ * 输入：digits = "23"
+输出：["ad","ae","af","bd","be","bf","cd","ce","cf"]
+ *
+ * @param {*} digits
+ * @returns
+ */
+
 var letterCombinations = function(digits) {
   const k = digits.length;
   const map = ["","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"];
@@ -380,6 +392,7 @@ var letterCombinations = function(digits) {
   return res;
 
   function backtracking(n, k, a) {
+    debugger
       if(path.length === k) {
           res.push(path.join(""));
           return;
@@ -392,3 +405,43 @@ var letterCombinations = function(digits) {
 
   }
 };
+
+// var letterCombinations = function (digits) {
+//   // 为空特殊处理
+//   if (digits.length === 0) return [];
+//   let numMap = new Map([
+//     ['0', ''],
+//     ['1', ''],
+//     ['2', 'abc'],
+//     ['3', 'def'],
+//     ['4', 'ghi'],
+//     ['5', 'jkl'],
+//     ['6', 'mno'],
+//     ['7', 'pqrs'],
+//     ['8', 'tuv'],
+//     ['9', 'wxyz']
+//   ])
+//   let res = [];
+//   dfs("", digits);
+//   return res;
+
+//   function dfs(str, digit) {
+//     // 如果字符串为空了，将拼接好的字符加入数组
+//     if (digit.length === 0) res.push(str);
+//     else {
+//       debugger
+//       // 拿到字符串第一个字符，拿到其对应的数字
+//       let numstr = numMap.get(digit[0]);
+//       // 对可能性进行组合
+//       for (let i = 0; i < numstr.length; i++) {
+//         str += numstr[i];
+//         // 递归组好的 str和下一段字符串
+//         dfs(str, digit.slice(1))
+//         // 回溯
+//         str = str.slice(0, -1);
+//       }
+//     }
+//   }
+// };
+const str = '23'
+console.log(letterCombinations(str));
