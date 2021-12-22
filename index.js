@@ -30,16 +30,16 @@
 //     }
 // };
 // 方法2：使用 target 减去 当前循环的内容，得到剩余需要查找的数，然后在map中寻找对应的值，没有就存入MAP中备用（循环 I = 0 的时候MAP 是空的，所以第一个数是无法得出答案的）。
-// var twoSum = function(nums, target) {
-//     map = new Map()
-//     for(let i = 0; i < nums.length; i++) {
-//         x = target - nums[i]
-//         if(map.has(x)) {
-//             return [map.get(x),i]
-//         }
-//         map.set(nums[i],i)
-//     }
-// };
+var twoSum = function(nums, target) {
+    map = new Map()
+    for(let i = 0; i < nums.length; i++) {
+        x = target - nums[i]
+        if(map.has(x)) {
+            return [map.get(x),i]
+        }
+        map.set(nums[i],i)
+    }
+};
 /**
  *
 
