@@ -143,37 +143,112 @@
 // 2 和 3 可以形成一组候选，2 + 2 + 3 = 7 。注意 2 可以使用多次。
 // 7 也是一个候选， 7 = 7 。
 // 仅有这两种组合。
-var combinationSum = function(candidates, target) {
-    let res = [], path = []
-    candidates.sort()
-    function backtracking ( start, sum) {
-      //  终止条件
-      if (sum > target) {
-        return
-      }
-      if(sum == target) {
-        // 浅拷贝
-        res.push(Array.from(path))
-        return
-      }
-      for (let i = start; i < candidates.length; i++) {
-        const n = candidates[i]
-        // 减枝 在当前就判断，相加是否大于 target 跳过
-        if(n > target - sum) continue;
-        // 条件
-        path.push(n)
-        sum += n
-        backtracking ( i, sum)
-        path.pop()
-        sum -= n
-      }
+// var combinationSum = function(candidates, target) {
+//     let res = [], path = []
+//     candidates.sort()
+//     function backtracking ( start, sum) {
+//       //  终止条件
+//       if (sum > target) {
+//         return
+//       }
+//       if(sum == target) {
+//         // 浅拷贝
+//         res.push(Array.from(path))
+//         return
+//       }
+//       for (let i = start; i < candidates.length; i++) {
+//         const n = candidates[i]
+//         // 减枝 在当前就判断，相加是否大于 target 跳过
+//         if(n > target - sum) continue;
+//         // 条件
+//         path.push(n)
+//         sum += n
+//         backtracking ( i, sum)
+//         path.pop()
+//         sum -= n
+//       }
+//     }
+//     backtracking(0, 0)
+//     return res
+// };
+
+
+// 40.给定一个数组 candidates 和一个目标数 target ，找出 candidates 中所有可以使数字和为 target 的组合。
+
+// candidates 中的每个数字在每个组合中只能使用一次。解集不能包含重复的组合。 
+
+/** 
+ * 输入: candidates = [10,1,2,7,6,1,5], target = 8,
+输出:
+[
+[1,1,6],
+[1,2,5],
+[1,7],
+[2,6]
+]
+
+ * 
+*/
+// 思路：回溯
+var combinationSum2 = function(candidates, target) {
+  candidates.sort();
+  let res = [], path = []
+  backtracking(0, 0)
+  console.log(res, 'res======')
+
+  return res
+
+  function backtracking(start, sum) {
+    // 终止条件
+    if (sum > target) return;
+    if(sum === target) {
+      res.push(Array.from(path))
+      return
     }
-    backtracking(0, 0)
-    return res
+    // 负数， 不会出在数组中
+   let f = -1 
+    for(let i = start; i < candidates.length; i++) {
+       const n = candidates[i]
+       if(n > target - sum|| n === f) continue;
+       path.push(n)
+       sum += n
+       // 给 F 赋值，表示前一个使用的值，如果是重复的会跳过。避免出现重复的组合
+       f = n
+       backtracking(i + 1  , sum)
+      // 回溯
+      path.pop(n)
+      sum -= n
+    }
+  }
 };
+// var combinationSum2 = function(candidates, target) {
+//   const res = []; path = [], len = candidates.length;
+//   candidates.sort();
+//   backtracking(0, 0);
+//   console.log(res, 'res')
+//   return res;
+//   function backtracking(sum, i) {
+//       if (sum > target) return;
+//       if (sum === target) {
+//           res.push(Array.from(path));
+//           return;
+//       }
+//       let f = -1;
+//       for(let j = i; j < len; j++) {
+//           const n = candidates[j];
+//           if(n > target - sum || n === f) continue;
+//           path.push(n);
+//           sum += n;
+//           f = n;
+//           backtracking(sum, j + 1);
+//           path.pop();
+//           sum -= n;
+//       }
+//   }
+// }
 
 
-
+combinationSum2([10,1,2,7,6,1,5], 8)
 // 分割问题 131 - 93
 // 子集问题 78 - 90
 // 排列问题 46 - 47
