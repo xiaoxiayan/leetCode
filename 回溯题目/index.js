@@ -179,6 +179,7 @@
 
 /** 
  * 输入: candidates = [10,1,2,7,6,1,5], target = 8,
+ * 1，1，2，6，5，7 ，10
 输出:
 [
 [1,1,6],
@@ -194,8 +195,7 @@ var combinationSum2 = function(candidates, target) {
   candidates.sort();
   let res = [], path = []
   backtracking(0, 0)
-  console.log(res, 'res======')
-
+  console.log(res, 'a ')
   return res
 
   function backtracking(start, sum) {
@@ -209,18 +209,21 @@ var combinationSum2 = function(candidates, target) {
    let f = -1 
     for(let i = start; i < candidates.length; i++) {
        const n = candidates[i]
-       if(n > target - sum|| n === f) continue;
+       if(n > target - sum|| n === f)  {
+        continue;
+       } 
        path.push(n)
        sum += n
        // 给 F 赋值，表示前一个使用的值，如果是重复的会跳过。避免出现重复的组合
        f = n
-       backtracking(i + 1  , sum)
+      backtracking(i + 1  , sum)
       // 回溯
-      path.pop(n)
+      path.pop()
       sum -= n
     }
   }
 };
+// ----
 // var combinationSum2 = function(candidates, target) {
 //   const res = []; path = [], len = candidates.length;
 //   candidates.sort();
