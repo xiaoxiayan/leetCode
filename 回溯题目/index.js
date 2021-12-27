@@ -175,9 +175,9 @@
 
 // 40.给定一个数组 candidates 和一个目标数 target ，找出 candidates 中所有可以使数字和为 target 的组合。
 
-// candidates 中的每个数字在每个组合中只能使用一次。解集不能包含重复的组合。 
+// candidates 中的每个数字在每个组合中只能使用一次。解集不能包含重复的组合。
 
-/** 
+/**
  * 输入: candidates = [10,1,2,7,6,1,5], target = 8,
  * 1，1，2，6，5，7 ，10
 输出:
@@ -188,41 +188,41 @@
 [2,6]
 ]
 
- * 
+ *
 */
 // 思路：回溯
-var combinationSum2 = function(candidates, target) {
-  candidates.sort();
-  let res = [], path = []
-  backtracking(0, 0)
-  console.log(res, 'a ')
-  return res
+// var combinationSum2 = function(candidates, target) {
+//   candidates.sort();
+//   let res = [], path = []
+//   backtracking(0, 0)
+//   console.log(res, 'a ')
+//   return res
 
-  function backtracking(start, sum) {
-    // 终止条件
-    if (sum > target) return;
-    if(sum === target) {
-      res.push(Array.from(path))
-      return
-    }
-    // 负数， 不会出在数组中
-   let f = -1 
-    for(let i = start; i < candidates.length; i++) {
-       const n = candidates[i]
-       if(n > target - sum|| n === f)  {
-        continue;
-       } 
-       path.push(n)
-       sum += n
-       // 给 F 赋值，表示前一个使用的值，如果是重复的会跳过。避免出现重复的组合
-       f = n
-      backtracking(i + 1  , sum)
-      // 回溯
-      path.pop()
-      sum -= n
-    }
-  }
-};
+//   function backtracking(start, sum) {
+//     // 终止条件
+//     if (sum > target) return;
+//     if(sum === target) {
+//       res.push(Array.from(path))
+//       return
+//     }
+//     // 负数， 不会出在数组中
+//    let f = -1
+//     for(let i = start; i < candidates.length; i++) {
+//        const n = candidates[i]
+//        if(n > target - sum|| n === f)  {
+//         continue;
+//        }
+//        path.push(n)
+//        sum += n
+//        // 给 F 赋值，表示前一个使用的值，如果是重复的会跳过。避免出现重复的组合
+//        f = n
+//       backtracking(i + 1  , sum)
+//       // 回溯
+//       path.pop()
+//       sum -= n
+//     }
+//   }
+// };
 // ----
 // var combinationSum2 = function(candidates, target) {
 //   const res = []; path = [], len = candidates.length;
@@ -251,8 +251,9 @@ var combinationSum2 = function(candidates, target) {
 // }
 
 
-combinationSum2([10,1,2,7,6,1,5], 8)
-// 分割问题 131 - 93
+// combinationSum2([10,1,2,7,6,1,5], 8)
+
+
 // 子集问题 78 - 90
 // 排列问题 46 - 47
 // 棋盘问题 51 - 37
