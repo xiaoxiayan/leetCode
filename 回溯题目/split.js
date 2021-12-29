@@ -127,18 +127,13 @@ var restoreIpAddresses = function(s) {
       for (let len = 1; len <= 3; len++) {           // 枚举出选择，三种切割长度
         if (start + len - 1 >= s.length) return;     // 加上要切的长度就越界，不能切这个长度
         if (len != 1 && s[start] == '0') return;     // 不能切出'0x'、'0xx'
-        console.log('start', start)
         const str = s.substring(start, start + len); // 当前选择切出的片段
-        console.log("str==", str)
         if (len == 3 && +str > 255) return;          // 不能超过255
-        
         subRes.push(str);    
-        console.log('结果集合===', subRes)                        // 作出选择，将片段加入subRes
         dfs(subRes, start + len);                    // 基于当前选择，继续选择，注意更新指针
         subRes.pop(); // 上面一句的递归分支结束，撤销最后的选择，进入下一轮迭代，考察下一个切割长度
       }
     };
-  
     dfs([], 0);       // dfs入口
     return res;
   };
