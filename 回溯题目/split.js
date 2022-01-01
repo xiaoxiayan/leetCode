@@ -54,7 +54,7 @@
 
 例如："0.1.2.201" 和 "192.168.1.1" 是 有效 IP 地址，但是 "0.011.255.245"、"192.168.1.312" 和 "192.168@1.1" 是 无效 IP 地址。
 给定一个只包含数字的字符串 s ，用以表示一个 IP 地址，返回所有可能的有效 IP 地址，这些地址可以通过在 s 中插入 '.' 来形成。你不能重新排序或删除 s 中的任何数字。你可以按 任何 顺序返回答案。
- * 
+ *
 
 示例 1：
 
@@ -65,22 +65,22 @@
 
 输入：s = "0000"
 输出：["0.0.0.0"]
- * 
- * 
- * 
- * 
+ *
+ *
+ *
+ *
 */
 /**
  * @param {string} s
  * @return {string[]}
  */
-// 思路：回溯 切割问题。 
+// 思路：回溯 切割问题。
 // 循环数组。然后一步一步去切割，
 // staring : 开始的位置，记录切割点
-// 终止条件  if( path.length > 4)  || +str > 255 
+// 终止条件  if( path.length > 4)  || +str > 255
 // 这个递归到最后一部才往前 return 到最初走 下一步。 耗费性能太大了
 //  var restoreIpAddresses = function(s) {
-//     // 
+//     //
 //     let res = [] , path = []
 //     backtracking(0)
 //     console.log('结果===',res )
@@ -113,10 +113,10 @@
 
 
 
-var restoreIpAddresses = function(s) { 
+var restoreIpAddresses = function(s) {
     const res = [];
     // 复原从start开始的子串
-    const dfs = (subRes, start) => {                 
+    const dfs = (subRes, start) => {
       if (subRes.length == 4 && start == s.length) { // 片段满4段，且耗尽所有字符
         res.push(subRes.join('.'));                  // 拼成字符串，加入解集
         return;                     // 返不返回都行，指针已经到头了，严谨的说还是返回
@@ -129,15 +129,25 @@ var restoreIpAddresses = function(s) {
         if (len != 1 && s[start] == '0') return;     // 不能切出'0x'、'0xx'
         const str = s.substring(start, start + len); // 当前选择切出的片段
         if (len == 3 && +str > 255) return;          // 不能超过255
+<<<<<<< HEAD
         subRes.push(str);    
+=======
+
+        subRes.push(str);
+        console.log('结果集合===', subRes)                        // 作出选择，将片段加入subRes
+>>>>>>> 4226a7ffac15b3337266890b0e648e8a03d114c1
         dfs(subRes, start + len);                    // 基于当前选择，继续选择，注意更新指针
         subRes.pop(); // 上面一句的递归分支结束，撤销最后的选择，进入下一轮迭代，考察下一个切割长度
       }
     };
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4226a7ffac15b3337266890b0e648e8a03d114c1
     dfs([], 0);       // dfs入口
     return res;
   };
-  
-  restoreIpAddresses('25525511135')
+
+//   restoreIpAddresses('25525511135')
 
 
