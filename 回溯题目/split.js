@@ -129,21 +129,13 @@ var restoreIpAddresses = function(s) {
         if (len != 1 && s[start] == '0') return;     // 不能切出'0x'、'0xx'
         const str = s.substring(start, start + len); // 当前选择切出的片段
         if (len == 3 && +str > 255) return;          // 不能超过255
-<<<<<<< HEAD
-        subRes.push(str);    
-=======
 
         subRes.push(str);
         console.log('结果集合===', subRes)                        // 作出选择，将片段加入subRes
->>>>>>> 4226a7ffac15b3337266890b0e648e8a03d114c1
         dfs(subRes, start + len);                    // 基于当前选择，继续选择，注意更新指针
         subRes.pop(); // 上面一句的递归分支结束，撤销最后的选择，进入下一轮迭代，考察下一个切割长度
       }
     };
-<<<<<<< HEAD
-=======
-
->>>>>>> 4226a7ffac15b3337266890b0e648e8a03d114c1
     dfs([], 0);       // dfs入口
     return res;
   };

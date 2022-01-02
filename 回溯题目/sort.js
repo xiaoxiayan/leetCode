@@ -93,4 +93,4 @@ var permute = function(nums) {
     return result
 };
 
-permuteUnique([1,1,2])
+// permuteUnique([1,1,2])
