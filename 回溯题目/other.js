@@ -60,6 +60,7 @@ function dfs(graph, cur, ans){
   // 题目要求就是 在目的地中 搜索出最佳的路线条件（按照最小的字母排序），前提是 从JFK 出发。
   if(!graph.has(cur)) return
   const neighbors = graph.get(cur)
+  debugger
   //题目要求先遍历字典序小的元素
   while(neighbors.length) dfs(graph, neighbors.shift(), ans)
   // 因为深度优先遍历是先进先出，所以每次遍历出发点添加到最后，意为最先出
@@ -77,9 +78,13 @@ function getGraph(tickets){
       map.get(from).push(to)
   }
   for(let [key, value] of map){
-      //字典顺序排序目的地数组
-      value.sort((a, b) => a < b ? -1 : a > b ? 1 : 0)
+      // 通过结果（目的地）的排序 得到 最优的目的地
+      // 字典顺序排序目的地数组
+      value.sort((a, b) => {
+        a < b ? -1 : a > b ? 1 : 0
+      })
   }
+  console.log(map)
   return map
 }
 
