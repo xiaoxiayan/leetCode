@@ -16,7 +16,7 @@
 // 给你二叉树的根节点 root ，返回它节点值的 前序 遍历。
 // 输入：root = [1,null,2,3]
 // 输出：[1,2,3]
-前序遍历:
+// 前序遍历: 中左右
 
 var preorderTraversal = function(root, res = []) {
     if (!root) return res;
@@ -26,7 +26,7 @@ var preorderTraversal = function(root, res = []) {
     return res;
 };
 
-中序遍历:
+// 中序遍历: 左中右
 
 var inorderTraversal = function(root, res = []) {
     if (!root) return res;
@@ -36,7 +36,7 @@ var inorderTraversal = function(root, res = []) {
     return res;
 };
 
-后序遍历:
+// 后序遍历:左右中
 
 var postorderTraversal = function(root, res = []) {
     if (!root) return res;
