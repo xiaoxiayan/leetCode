@@ -36,6 +36,7 @@ var inorderTraversal = function(root, res = []) {
     return res;
 };
 
+// 145. 后序遍历
 // 后序遍历:左右中
 
 var postorderTraversal = function(root, res = []) {
@@ -45,3 +46,4 @@ var postorderTraversal = function(root, res = []) {
     res.push(root.val);
     return res;
 };
+
