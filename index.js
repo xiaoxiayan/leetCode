@@ -327,6 +327,8 @@ var maxArea = function(height) {
   return max;
 };
 */
+
+// 15。三数字之和
 // 给你一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0 ？请你找出所有和为 0 且不重复的三元组。
 
 // let arr = [-1,0,1,2,-1,-4]
@@ -368,6 +370,8 @@ var maxArea = function(height) {
 //   }
 //   return res
 // };
+
+
 // console.log(threeSum([-1,0,1,2,-1,-4]))
 // 17. 电话号码的字母组合
 // 给定一个仅包含数字 2-9 的字符串，返回所有它能表示的字母组合。答案可以按 任意顺序 返回。
@@ -443,5 +447,36 @@ var letterCombinations = function(digits) {
 //     }
 //   }
 // };
-const str = '23'
-console.log(letterCombinations(str));
+// const str = '23'
+// console.log(letterCombinations(str));
+
+
+/**
+ * 18.四数字之和
+ *
+ *
+ */
+ var fourSum = function(nums, target) {
+  const len = nums.length;
+  if(len < 4) return [];
+  nums.sort((a, b) => a - b);
+  const res = [];
+  for(let i = 0; i < len - 3; i++) {
+      // 去重i
+      if(i > 0 && nums[i] === nums[i - 1]) continue;
+      for(let j = i + 1; j < len - 2; j++) {
+          // 去重j
+          if(j > i + 1 && nums[j] === nums[j - 1]) continue;
+          let l = j + 1, r = len - 1;
+          while(l < r) {
+              const sum = nums[i] + nums[j] + nums[l] + nums[r];
+              if(sum < target) { l++; continue}
+              if(sum > target) { r--; continue}
+              res.push([nums[i], nums[j], nums[l], nums[r]]);
+              while(l < r && nums[l] === nums[++l]);
+              while(l < r && nums[r] === nums[--r]);
+          }
+      }
+  }
+  return res;
+};

@@ -52,7 +52,7 @@
 //     let chessBoard = new Array(n).fill([]).map(() => new Array(n).fill('.'))
 //     backtracing(0,chessBoard)
 //     return result
-    
+
 // };
 
 
@@ -70,7 +70,7 @@ const solveNQueens = (n) => {
     const backtrack = (row) => {
         if (row == n) {//终止条件
             const stringsBoard = board.slice();
-            
+
             for (let i = 0; i < n; i++) {//生成字符串
                 stringsBoard[i] = stringsBoard[i].join('');
             }
@@ -100,8 +100,8 @@ const solveNQueens = (n) => {
     return res;
 };
 
-solveNQueens(4)
-// 37 解数独 
+// solveNQueens(4)
+// 37 解数独
 var solveSudoku = function(board) {
     // 判断数独 是否合理
     function isValid(row, col, val, board) {
@@ -140,18 +140,21 @@ var solveSudoku = function(board) {
                 for(let val = 1; val <= 9; val++) {
                     if(isValid(i, j, `${val}`, board)) {
                         board[i][j] = `${val}`
+                        // 进行一个 递归
                         if (backTracking()) {
+                            // 所有的值都填完
                             return true
                         }
+                        // 回溯
                         board[i][j] = `.`
                     }
                 }
                 return false
             }
         }
+        // 所有的值都填完，终止
         return true
     }
     backTracking(board)
     return board
-    
 };
