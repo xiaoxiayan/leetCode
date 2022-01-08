@@ -143,7 +143,6 @@ var solveSudoku = function(board) {
                         if (backTracking()) {
                             return true
                         }
-                        
                         board[i][j] = `.`
                     }
                 }
