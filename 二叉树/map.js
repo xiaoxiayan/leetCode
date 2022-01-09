@@ -26,7 +26,7 @@ var preorderTraversal = function(root, res = []) {
     return res;
 };
 
-// 中序遍历: 左中右
+// 94. 中序遍历: 左中右
 
 var inorderTraversal = function(root, res = []) {
     if (!root) return res;
