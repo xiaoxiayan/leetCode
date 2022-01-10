@@ -7,9 +7,9 @@
  */
 // 生成节点的 函数
   function TreeNode(val, left, right) {
-        this.val = (val===undefined ? 0 : val)
-        this.left = (left===undefined ? null : left)
-        this.right = (right===undefined ? null : right)
+        this.val = (val === undefined ? 0 : val)
+        this.left = (left === undefined ? null : left)
+        this.right = (right === undefined ? null : right)
     }
 
 // 144 .二叉树的前序遍历
@@ -46,4 +46,48 @@ var postorderTraversal = function(root, res = []) {
     res.push(root.val);
     return res;
 };
+//  层序遍历
 
+// 107.二叉树的层次遍历II
+// 199.二叉树的右视图
+// 637.二叉树的层平均值
+// 429.N叉树的前序遍历
+// 515.在每个树行中找最大值
+// 116.填充每个节点的下一个右侧节点指针
+// 117.填充每个节点的下一个右侧节点指针II
+// 104.二叉树的最大深度
+// 111.二叉树的最小深度
+
+
+/**
+ * 102 . 层序遍历
+*/
+var levelOrder = function(root) {
+  //二叉树的层序遍历
+  let res = [],queue = [];
+  queue.push(root);
+  if(root === null){
+      return res;
+  }
+  while(queue.length !==0 ){
+      // 记录当前层级节点数
+      let length = queue.length;
+      //存放每一层的节点
+      let curLevel = [];
+      for(let i = 0; i < length; i++){
+          let node = queue.shift();
+          curLevel.push(node.val);
+          // 存放当前层下一层的节点
+          node.left && queue.push(node.left);
+          node.right && queue.push(node.right);
+      }
+      //把每一层的结果放到结果数组
+      res.push(curLevel);
+  }
+  console.log(root, 'root');
+  console.log(res)
+  return res;
+};
+// 生成 二叉树
+let root = new TreeNode(3, new TreeNode(9), new TreeNode(20, new TreeNode(15), new TreeNode(7)))
+levelOrder(root);
