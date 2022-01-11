@@ -48,7 +48,6 @@ var postorderTraversal = function(root, res = []) {
 };
 //  层序遍历
 
-// 107.二叉树的层次遍历II
 // 199.二叉树的右视图
 // 637.二叉树的层平均值
 // 429.N叉树的前序遍历
@@ -84,10 +83,40 @@ var levelOrder = function(root) {
       //把每一层的结果放到结果数组
       res.push(curLevel);
   }
-  console.log(root, 'root');
-  console.log(res)
   return res;
 };
 // 生成 二叉树
 let root = new TreeNode(3, new TreeNode(9), new TreeNode(20, new TreeNode(15), new TreeNode(7)))
 levelOrder(root);
+
+/**
+ * 107.二叉树的层次遍历II
+ * 给你二叉树的根节点 root ，返回其节点值 自底向上的层序遍历 。 （即按从叶子节点所在层到根节点所在的层，逐层从左向右遍历）
+ *
+*/
+var levelOrderBottom = function(root) {
+  //二叉树的层序遍历
+  let res = [],queue = [];
+  queue.push(root);
+  if(root === null){
+      return res;
+  }
+  while(queue.length !==0 ){
+      // 记录当前层级节点数
+      let length = queue.length;
+      //存放每一层的节点
+      let curLevel = [];
+      for(let i = 0; i < length; i++){
+          let node = queue.shift();
+          curLevel.push(node.val);
+          // 先载入右边再载入左边，翻转的时候就
+          node.left && queue.push(node.left);
+          node.right && queue.push(node.right);
+      }
+      //把每一层的结果放到结果数组
+      res.push(curLevel);
+  }
+  return res.reverse();
+};
+
+levelOrderBottom(root)
