@@ -48,7 +48,6 @@ var postorderTraversal = function(root, res = []) {
 };
 //  层序遍历
 
-// 199.二叉树的右视图
 // 637.二叉树的层平均值
 // 429.N叉树的前序遍历
 // 515.在每个树行中找最大值
@@ -120,3 +119,25 @@ var levelOrderBottom = function(root) {
 };
 
 levelOrderBottom(root)
+
+// 199.二叉树的右视图
+// 给定一个二叉树的 根节点 root，想象自己站在它的右侧，按照从顶部到底部的顺序，返回从右侧所能看到的节点值。
+var rightSideView = function(root) {
+    // 取从右边看的最后一个节点。也就是当前层级的最后一个节点
+    let res = [], queue = []
+    queue.push(root)
+
+    while(queue.length && root !== null){
+        let length= queue.length;
+        while(length--) {
+            let node = queue.shift();
+            if(!length){
+                // length == 0 到达最后一个节点
+                res.push(node.val);
+            }
+             node.left && queue.push(node.left);
+             node.right && queue.push(node.right);
+        }
+    }
+    return res
+};
