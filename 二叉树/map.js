@@ -48,7 +48,7 @@ var postorderTraversal = function(root, res = []) {
 };
 //  层序遍历
 
-// 637.二叉树的层平均值
+
 // 429.N叉树的前序遍历
 // 515.在每个树行中找最大值
 // 116.填充每个节点的下一个右侧节点指针
@@ -138,6 +138,28 @@ var rightSideView = function(root) {
              node.left && queue.push(node.left);
              node.right && queue.push(node.right);
         }
+    }
+    return res
+};
+
+// 637.二叉树的层平均值
+var averageOfLevels = function(root) {
+    let res = [], queue = []
+    if( root == null ) {
+        return res
+    }
+    queue.push(root)
+    while(queue.length) {
+        // 定义长度， 循环 相加 /2 赋值
+        let len = queue.length
+        let sum = 0
+        let node = queue.splice(0, len)
+        for(let i = 0; i< len; i++) {
+            sum += node[i].val
+            node[i].left && queue.push(node[i].left);
+            node[i].right && queue.push(node[i].right);
+        }
+        res.push(sum / len)
     }
     return res
 };
