@@ -49,7 +49,6 @@ var postorderTraversal = function(root, res = []) {
 //  层序遍历
 
 
-// 429.N叉树的前序遍历
 // 515.在每个树行中找最大值
 // 116.填充每个节点的下一个右侧节点指针
 // 117.填充每个节点的下一个右侧节点指针II
@@ -118,8 +117,7 @@ var levelOrderBottom = function(root) {
   return res.reverse();
 };
 
-levelOrderBottom(root)
-
+// levelOrderBottom(root)
 // 199.二叉树的右视图
 // 给定一个二叉树的 根节点 root，想象自己站在它的右侧，按照从顶部到底部的顺序，返回从右侧所能看到的节点值。
 var rightSideView = function(root) {
@@ -160,6 +158,35 @@ var averageOfLevels = function(root) {
             node[i].right && queue.push(node[i].right);
         }
         res.push(sum / len)
+    }
+    return res
+};
+
+// 429.N叉树的前序遍历
+var levelOrder = function(root) {
+    let res = [] , queue = []
+    // 据观察，节点用null 分离。子节点 的 null个数为 上一层的 节点数。 需要把 分离的 null 过滤
+    // 最后一层 的时候 结尾无法检测
+    // 数据结构 显示可以直接操作，只需要判断  children.length > 0 .循环即可
+    queue.push(root)
+    // 默认第一个节点是 1， 后面根据 节点的子集去获取
+    while(queue.length && root !== null) {
+        let current = []
+        let len = queue.length
+        while(len--) {
+            let node = queue.shift()
+            current.push(node.val)
+            // 性能有点差，为空的数据也去循环了
+            // for(item of node.children) {
+            //     console.log(item)
+            //     item && queue.push(item)
+            // }
+            // for提前判断了 是否可以进入，
+            for(let j = 0 ; j < node.children.length; j++) {
+                queue.push(node.children[j])
+            }
+        }
+        res.push(current)
     }
     return res
 };
