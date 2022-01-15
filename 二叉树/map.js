@@ -49,7 +49,6 @@ var postorderTraversal = function(root, res = []) {
 //  层序遍历
 
 
-// 515.在每个树行中找最大值
 // 116.填充每个节点的下一个右侧节点指针
 // 117.填充每个节点的下一个右侧节点指针II
 // 104.二叉树的最大深度
@@ -187,6 +186,27 @@ var levelOrder = function(root) {
             }
         }
         res.push(current)
+    }
+    return res
+};
+
+// 515.在每个树行中找最大值
+
+// 层序遍历，遍历每一层最大的对比 ，记录一下
+
+var largestValues = function(root) {
+    let res = [] , queue = []
+    queue.push(root)
+    while(queue.length && root !== null) {
+        let max = queue[0].val
+        let len = queue.length
+        while(len--) {
+            let node = queue.shift()
+            max = max>node.val?max:node.val;
+            node.left && queue.push(node.left);
+            node.right && queue.push(node.right);
+        }
+        res.push(max)
     }
     return res
 };
