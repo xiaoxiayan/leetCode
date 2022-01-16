@@ -49,7 +49,6 @@ var postorderTraversal = function(root, res = []) {
 //  层序遍历
 
 
-// 116.填充每个节点的下一个右侧节点指针
 // 117.填充每个节点的下一个右侧节点指针II
 // 104.二叉树的最大深度
 // 111.二叉树的最小深度
@@ -209,4 +208,35 @@ var largestValues = function(root) {
         res.push(max)
     }
     return res
+};
+
+// 116.填充每个节点的下一个右侧节点指针
+/**
+ * // Definition for a Node.
+ * function Node(val, left, right, next) {
+ *    this.val = val === undefined ? null : val;
+ *    this.left = left === undefined ? null : left;
+ *    this.right = right === undefined ? null : right;
+ *    this.next = next === undefined ? null : next;
+ * };
+ */
+
+ var connect = function(root) {
+    // next 指向 下一个节点， 如果没有下一个节点，指向 # 
+    let queue = []
+    queue.push(root) 
+
+    while(queue.length && root !== null) {
+        // 需要获取到这一层级的 全部子节点，然后指向。
+        let len = queue.length
+        for(let i = 0; i <len; i++) {
+            let node = queue.shift()
+            if(i < len - 1) {
+                node.next = queue[0] 
+            }
+            node.left && queue.push(node.left) 
+            node.right && queue.push(node.right) 
+        }
+    }
+    return root  
 };
