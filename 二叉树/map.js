@@ -49,10 +49,6 @@ var postorderTraversal = function(root, res = []) {
 //  层序遍历
 
 
-// 117.填充每个节点的下一个右侧节点指针II
-// 104.二叉树的最大深度
-// 111.二叉树的最小深度
-
 
 /**
  * 102 . 层序遍历
@@ -190,7 +186,6 @@ var levelOrder = function(root) {
 };
 
 // 515.在每个树行中找最大值
-
 // 层序遍历，遍历每一层最大的对比 ，记录一下
 
 var largestValues = function(root) {
@@ -209,8 +204,10 @@ var largestValues = function(root) {
     }
     return res
 };
-
+// 在 JS 中 ，是一样的这两道题
 // 116.填充每个节点的下一个右侧节点指针
+// 117.填充每个节点的下一个右侧节点指针II
+
 /**
  * // Definition for a Node.
  * function Node(val, left, right, next) {
@@ -222,21 +219,100 @@ var largestValues = function(root) {
  */
 
  var connect = function(root) {
-    // next 指向 下一个节点， 如果没有下一个节点，指向 # 
+    // next 指向 下一个节点， 如果没有下一个节点，指向 #
     let queue = []
-    queue.push(root) 
-
+    queue.push(root)
     while(queue.length && root !== null) {
         // 需要获取到这一层级的 全部子节点，然后指向。
         let len = queue.length
         for(let i = 0; i <len; i++) {
             let node = queue.shift()
             if(i < len - 1) {
-                node.next = queue[0] 
+                node.next = queue[0]
             }
-            node.left && queue.push(node.left) 
-            node.right && queue.push(node.right) 
+            node.left && queue.push(node.left)
+            node.right && queue.push(node.right)
         }
     }
-    return root  
+    return root
 };
+
+// 104.二叉树的最大深度
+// 递归，比较，省内存
+var maxDepth = function(root) {
+    if(!root) {
+        return 0;
+    } else {
+        const left = maxDepth(root.left);
+        const right = maxDepth(root.right);
+        return Math.max(left, right) + 1;
+    }
+};
+
+// 传统层序遍历
+var maxDepth = function(root) {
+    let queue = [], res = 0
+    queue.push(root)
+    while(queue.length && root !== null) {
+        // 需要获取到这一层级的 全部子节点，然后指向。
+        let len = queue.length
+        for(let i = 0; i <len; i++) {
+            let node = queue.shift()
+            node.left && queue.push(node.left)
+            node.right && queue.push(node.right)
+        }
+        res++
+    }
+    return res
+}
+
+// 111.二叉树的最小深度
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+
+// 递归
+/**
+    * @param {TreeNode} root
+    * @return {number}
+    */
+// 有点难理解
+ var minDepth1 = function(root) {
+    if(!root) return 0;
+    // 到叶子节点 返回 1
+    if(!root.left && !root.right) return 1;
+    // 只有右节点时 递归右节点
+    if(!root.left) return 1 + minDepth(root.right);
+    // 只有左节点时 递归左节点
+    if(!root.right) return 1 + minDepth(root.left);
+    return Math.min(minDepth(root.left), minDepth(root.right)) + 1;
+};
+
+
+// 迭代
+/**
+* @param {TreeNode} root
+* @return {number}
+*/
+var minDepth = function(root) {
+    if(!root) return 0;
+    const queue = [root];
+    let dep = 0;
+    while(true) {
+        let size = queue.length;
+        dep++;
+        while(size--){
+            const node = queue.shift();
+            // 到第一个叶子节点 返回 当前深度
+            if(!node.left && !node.right) return dep;
+            node.left && queue.push(node.left);
+            node.right && queue.push(node.right);
+        }
+    }
+};
+
