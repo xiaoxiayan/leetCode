@@ -237,6 +237,8 @@ var largestValues = function(root) {
     return root
 };
 
+// ### 二叉树的属性
+
 // 104.二叉树的最大深度
 // 递归，比较，省内存
 var maxDepth = function(root) {
@@ -266,7 +268,7 @@ var maxDepth = function(root) {
     return res
 }
 
-// 111.二叉树的最小深度
+// 111.二叉树的最小深度(到达子叶节点)
 /**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -315,4 +317,59 @@ var minDepth = function(root) {
         }
     }
 };
+
+/101----100----572 是相同类型题目/
+// 101.对称二叉树
+var isSymmetric = function(root) {
+    //使用递归遍历左右子树 递归三部曲
+    // 1. 确定递归的参数 root.left root.right和返回值true false
+    const compareNode = function(left,right){
+        //2. 确定终止条件 空的情况
+        if(left === null && right !== null || left !== null && right === null){
+            return false;
+        }else if (left === null && right === null){
+            return true;
+        }else if (left.val !== right.val){
+            return false;
+        }
+        //3. 确定单层递归逻辑
+        let outSide = compareNode(left.left,right.right);
+        let inSide = compareNode(left.right,right.left);
+        return outSide&&inSide;
+    }
+    if(root===null){
+        return true;
+    }
+    return compareNode(root.left,root.right);
+};
+
+// 100.相同的树
+var isSameTree = function(p, q) {
+    const compareNode = function (left, right) {
+        // 终止条件，如果两个都是null
+        if(left === null && right !== null || left !== null && right === null) {
+            // 左边或者右边 一个有值 一个没值。都是 false
+            return false
+        } else if (left === null && right === null) {
+            // 两个都是 null。说明相等。
+            return true
+        } else if (left.val !== right.val) {
+            // 对比值。
+            return false
+        }
+        // 递归返回值
+        let leftSide = compareNode(left.left, right.left)
+        let rightSide = compareNode(left.right, right.right)
+        return leftSide && rightSide;
+
+    }
+    // 对比两颗树
+    if(p == null && q == null) {
+        return true
+    }
+    return compareNode(p, q)
+};
+
+
+// 572.另一个树的子树
 
