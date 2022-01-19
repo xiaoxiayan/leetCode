@@ -373,3 +373,22 @@ var isSameTree = function(p, q) {
 
 // 572.另一个树的子树
 
+var isSubtree = function(root, subRoot) {
+    if (root == null) return subRoot == null;
+    // 递归层层比对, 吧原树的 左右和 subRoot传进去
+    const compareNode = function(left, right) {
+        // 层序遍历需要对比值 再往下递归，否者没有意义
+        if(left === null && right === null) {
+            return true
+        } else if (left !== null && right === null || left === null && right !== null) {
+            return false
+        } else if (left.val !== right.val ) {
+            return false
+        }
+        const leftCompare = compareNode(left.left, right.left)
+        const rightCompare = compareNode(left.right, right.right)
+        return leftCompare && rightCompare
+    }
+    // 需要额外检测一下 根节点的树。
+    return  isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot) || compareNode(root, subRoot)
+};
