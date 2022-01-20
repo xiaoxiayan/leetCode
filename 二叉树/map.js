@@ -392,3 +392,20 @@ var isSubtree = function(root, subRoot) {
     // 需要额外检测一下 根节点的树。
     return  isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot) || compareNode(root, subRoot)
 };
+
+// 222.完全二叉树的节点个数
+// 有递归，层序遍历法。
+var countNodes = function(root) {
+    // 递归版本, 左右树递归
+    const getNodeNum = function (node) {
+        // 终止条件
+        if(node === null) {
+            return 0;
+        }
+        // 每一层的逻辑。 往下递归，然后返回 左右节点的 值
+        let leftNode = getNodeNum(node.left);
+        let rightNode = getNodeNum(node.right);
+        return (leftNode + rightNode + 1);
+    }
+    return getNodeNum(root);
+};
