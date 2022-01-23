@@ -409,3 +409,33 @@ var countNodes = function(root) {
     }
     return getNodeNum(root);
 };
+
+// 110.平衡二叉树
+/**
+ *
+给定一个二叉树，判断它是否是高度平衡的二叉树。
+
+本题中，一棵高度平衡二叉树定义为：
+
+一个二叉树每个节点 的左右两个子树的高度差的绝对值不超过 1 。
+ *
+*/
+
+var isBalanced = function(root) {
+    //  递归寻找左右节点的最深层级
+    let flag = true
+    const maxDepth = function(node) {
+        // null不需要传入 不需要传入
+        if (node == null) return 0;
+        // 定义左右节点深度， 对比两个深度，两个深度 ？
+         let leftMaxDepth = maxDepth(node.left)
+         let rightMaxDepth = maxDepth(node.right)
+         if (Math.abs(rightMaxDepth - leftMaxDepth) > 1) {
+            flag = false;
+        }
+        // 返回 最大深度
+        return 1 + Math.max(leftMaxDepth, rightMaxDepth)
+    }
+    maxDepth(root);
+    return flag
+};
