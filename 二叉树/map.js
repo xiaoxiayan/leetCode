@@ -72,7 +72,6 @@
              // 存放当前层下一层的节点
              node.left && queue.push(node.left);
              node.right && queue.push(node.right);
-<<<<<<< HEAD
         }
     }
     return res
@@ -383,7 +382,6 @@ var isBalanced = function(root) {
     maxDepth(root);
     return flag
 };
-=======
          }
          //把每一层的结果放到结果数组
          res.push(curLevel);
@@ -736,7 +734,7 @@ var isBalanced = function(root) {
      let res = [],
          path = []
      const trackbacking = function (root) {
-         // 1,参数，root. 
+         // 1,参数，root.
          path.push(root.val)
          // 2，终止条件, 如果找到叶子节点，返回路径
          if (root.left === null && root.right === null) {
@@ -779,8 +777,25 @@ var isBalanced = function(root) {
          root.right && trackbacking(root.right, curPath)
 
      }
-
      trackbacking(root, '')
      return res
  };
->>>>>>> 7f6bb79a43a14be709b460551a381e3ce66cddaf
+
+//  404 左叶子之和 （ 左子叶节点）
+var sumOfLeftLeaves = function(root) {
+    // 获取的是子叶节点
+    let sum = 0
+    const getLeftNode = function (root) {
+        if(root === null) {
+        return
+        }
+        if(root.left !== null && root.left.right === null && root.left.left === null) {
+            // 判断是不是左子叶
+            sum += root.left.val
+        }
+        getLeftNode(root.left)
+        getLeftNode(root.right)
+    }
+    getLeftNode(root)
+    return  sum
+};
