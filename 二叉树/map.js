@@ -799,3 +799,21 @@ var sumOfLeftLeaves = function(root) {
     getLeftNode(root)
     return  sum
 };
+
+// 513.二叉树左下角的值
+
+var findBottomLeftValue = function(root) {
+    // 可以使用层序遍历，走到最后一层中，第0 个，但是怎么判断是否是最后一层呢。
+    // 可以吧当前层的第一个 循环内容定义为 最左，循环完如果没下一层就是当前的最左
+    let res = null , queue = [root]
+    while(queue.length) {
+        res = queue[0].val
+        let len = queue.length
+        while(len--) {
+            let node  = queue.shift()
+            node.left && queue.push(node.left)
+            node.right && queue.push(node.right)
+        }
+    }
+    return res
+}
