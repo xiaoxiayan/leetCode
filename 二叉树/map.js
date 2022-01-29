@@ -835,3 +835,24 @@ let haspathsum = function (root, targetsum) {
     if (!root) return false;
     return traversal(root, targetsum - root.val);
 }
+
+// 226. 翻转二叉树
+// 对 node.left 和 right 重新赋
+var invertTree = function(root) {
+
+    const invertNode = function (node) {
+        if(!node) return
+        //翻转逻辑
+        let holdNode = node.left
+        node.left = node.right
+        node.right = holdNode
+        //  然后向下递归
+        node.left && invertNode(node.left)
+        node.right && invertNode(node.right)
+    }
+
+    if(!root) return root
+    invertNode(root)
+    return root
+
+};
