@@ -856,3 +856,58 @@ var invertTree = function(root) {
     return root
 
 };
+
+// 106.从中序与后序遍历序列构造二叉树
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {number[]} inorder
+ * @param {number[]} postorder
+ * @return {TreeNode}
+ */
+ var buildTree = function(inorder, postorder) {
+    // 中序遍历,左中右，
+    // 后序遍历 左右中
+    // 后续遍历 中最后一位数是 根结点， 根据根结点 从中序遍历中去 切割，
+    // 切割出来， 就是。root ,left = TreeNode[0] , right = TreeNode
+    // 切割出来以后 ，获取 leftsize .然后去切割 postorder， 然后取最后一位 是根结点
+    // 递归的时候，还是要依据 postorder 去切割
+        let root = postorder.pop()
+        let tree = new TreeNode(root)
+        // 判断一下是不是根节点，如果是的话提前就返回
+        if(!postorder.length) return tree
+        let rootIndex = inorder.indexOf(root)
+        let right = inorder.splice(rootIndex + 1)
+        let left = inorder.splice(0, rootIndex)
+        // 获取 postorder子节点对应的数组，找下一个子节点
+        // 如果还有下面的节点，往下走
+        if(left && left.length) {
+            let postorderLeft = postorder.splice(0, left.length)
+            tree.left =  buildTree(left, postorderLeft)
+        }
+        if(right && right.length) {
+             let postorderRight = postorder.splice(0, right.length)
+             tree.right =  buildTree(right, postorderRight)
+        }
+        return tree
+    };
+//  精简代码，但是性能不高。
+    var buildTree = function(inorder, postorder) {
+        if (!postorder.length) return null
+
+        let root = new TreeNode(postorder[postorder.length - 1])
+
+        let index = inorder.findIndex(number => number === root.val)
+
+        root.left = buildTree(inorder.slice(0, index), postorder.slice(0, index))
+        root.right = buildTree(inorder.slice(index + 1, inorder.length), postorder.slice(index, postorder.length - 1))
+
+        return root
+    };
