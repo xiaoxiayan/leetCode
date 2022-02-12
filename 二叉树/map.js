@@ -447,7 +447,7 @@ var isBalanced = function(root) {
      return res
  };
 
- // 637.二叉树的层平均值
+ // 637.二叉树的层平均值 --
  var averageOfLevels = function (root) {
      let res = [],
          queue = []
