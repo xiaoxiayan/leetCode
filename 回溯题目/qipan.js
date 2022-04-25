@@ -100,6 +100,51 @@ const solveNQueens = (n) => {
     return res;
 };
 
+// 36 判断数独
+/**
+ * @param {character[][]} board
+ * @return {boolean}
+ */
+ var isValidSudoku = function(board) {
+    // 1.初始化三个数组
+    let rows = [];
+    let columns = [];
+    let boxs = [];
+    // 初始化每一行，每一列，每一块的map
+    // 之所以不用let rows = new Array(9).fill(new Map()) 的形式，是因为fill如果
+    // 填充的是对象，则填充的是对象的浅拷贝
+    for(let i = 0; i < 9; i++){
+      rows[i] = new Map();
+      columns[i] = new Map();
+      boxs[i] = new Map();
+    }
+
+    // 从左到右，上到下遍历数组
+    for(let i = 0; i < 9; i++){
+      for(let j = 0; j < 9; j++){
+        debugger
+        let char = board[i][j];
+
+        // 剪枝
+        if(char === '.') continue;
+
+        let block = Math.floor(j/3) + Math.floor(i/3) * 3;
+        // 剪枝 如果当前字符所在 行/列/块 中已经有了此字符，直接return false
+        if(rows[i].has(char) || columns[j].has(char) || boxs[block].has(char)) return false;
+        else {
+          // 如果当前 行/列/块 中没有此字符，添加此字符
+          rows[i].set(char, 1);
+          columns[j].set(char, 1);
+          boxs[block].set(char, 1);
+        }
+      }
+    }
+    // 遍历完了，没找到毛病，return true
+    return true;
+  };
+const arr =  [["5","3",".",".","7",".",".",".","."],["6",".",".","1","9","5",".",".","."],[".","9","8",".",".",".",".","6","."],["8",".",".",".","6",".",".",".","3"],["4",".",".","8",".","3",".",".","1"],["7",".",".",".","2",".",".",".","6"],[".","6",".",".",".",".","2","8","."],[".",".",".","4","1","9",".",".","5"],[".",".",".",".","8",".",".","7","9"]]
+isValidSudoku(arr)
+
 // solveNQueens(4)
 // 37 解数独
 var solveSudoku = function(board) {

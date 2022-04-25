@@ -456,27 +456,105 @@ var letterCombinations = function(digits) {
  *
  *
  */
- var fourSum = function(nums, target) {
-  const len = nums.length;
-  if(len < 4) return [];
-  nums.sort((a, b) => a - b);
-  const res = [];
-  for(let i = 0; i < len - 3; i++) {
-      // 去重i
-      if(i > 0 && nums[i] === nums[i - 1]) continue;
-      for(let j = i + 1; j < len - 2; j++) {
-          // 去重j
-          if(j > i + 1 && nums[j] === nums[j - 1]) continue;
-          let l = j + 1, r = len - 1;
-          while(l < r) {
-              const sum = nums[i] + nums[j] + nums[l] + nums[r];
-              if(sum < target) { l++; continue}
-              if(sum > target) { r--; continue}
-              res.push([nums[i], nums[j], nums[l], nums[r]]);
-              while(l < r && nums[l] === nums[++l]);
-              while(l < r && nums[r] === nums[--r]);
-          }
+//  var fourSum = function(nums, target) {
+//   const len = nums.length;
+//   if(len < 4) return [];
+//   nums.sort((a, b) => a - b);
+//   const res = [];
+//   for(let i = 0; i < len - 3; i++) {
+//       // 去重i
+//       if(i > 0 && nums[i] === nums[i - 1]) continue;
+//       for(let j = i + 1; j < len - 2; j++) {
+//           // 去重j
+//           if(j > i + 1 && nums[j] === nums[j - 1]) continue;
+//           let l = j + 1, r = len - 1;
+//           while(l < r) {
+//               const sum = nums[i] + nums[j] + nums[l] + nums[r];
+//               if(sum < target) { l++; continue}
+//               if(sum > target) { r--; continue}
+//               res.push([nums[i], nums[j], nums[l], nums[r]]);
+//               while(l < r && nums[l] === nums[++l]);
+//               while(l < r && nums[r] === nums[--r]);
+//           }
+//       }
+//   }
+//   return res;
+// };
+
+// 最短路径
+var shortestToChar = function(s, c) {
+  const n = s.length;
+  const ans = new Array(n).fill(0);
+  // 先从左边开始 循环， 然后再从右边循环一边
+  for (let i = 0, idx = -n; i < n; i++) {
+      if (s[i] === c) {
+          idx = i;
+      }
+      ans[i] = i - idx;
+  }
+  console.log(ans)
+  for (let i = n - 1, idx = 2 * n; i >= 0; --i) {
+    debugger
+      if (s[i] == c) {
+          idx = i;
+      }
+      console.log(idx,i ,ans[i])
+      ans[i] = Math.min(ans[i], idx - i);
+  }
+  return ans;
+};
+
+// shortestToChar("loveleetcodeaa", "e")
+
+// 70. 爬楼梯
+// 经典斐波那契数列
+var climbStairs = function(n) {
+  // 还是一个 斐波那契数列的问题
+  let dp = []
+  dp[0] =1
+  dp[1] =1
+  for(let i = 2; i <= n; i++) {
+      dp[i] = dp[i - 1] + dp[i - 2];
+  }
+  return dp[n]
+};
+
+
+// 69. X的整数平方根
+// 输入 4 输出2
+//
+// var mySqrt = function (x) {
+//   if(x < 2 ) {
+//       return x
+//   }
+//   // x 大于2 ， 他的平方根范围就是 1- x ，但是 开平方一般都是大于 这个数 除与2 的，可以先缩小范围
+//   let left = 1, right = x
+//   while (left   <= right) {
+//       let mid = left + ((right - left) >> 1)//中间位置索引 x>>1 表示除以2并取整，缩小一下遍历的范围
+//       debugger
+//       if (mid * mid <= x) {
+//           left = mid + 1
+//       } else {
+//           right = mid - 1
+//       }
+//   }
+//   return right
+// };
+
+
+var mySqrt = function (x) {
+  let l = 0, r = x;
+  while(l <= r) {
+      const mid = Math.floor((l + r) / 2);
+      if(mid * mid === x) {
+          return mid;
+      }
+      if(mid * mid < x) {
+          l = mid + 1;
+      } else {
+          r = mid - 1;
       }
   }
-  return res;
-};
+  return r;
+
+}
