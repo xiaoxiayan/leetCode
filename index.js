@@ -558,3 +558,42 @@ var mySqrt = function (x) {
   return r;
 
 }
+
+
+var minMutation = function(start, end, bank) {
+  // 基因库不存在目标基因
+  if (bank.indexOf(end) === -1) return -1;
+
+  let m = new Map([
+      ['A', 'CGT'], ['C', 'AGT'], ['G', 'ACT'], ['T', 'ACG']
+  ]);
+  let bankMap = new Set(bank);
+  let seen = new Set();
+  const dfs = (cur, target, step) => {
+      if (cur === target) return step;
+      for (let nextStr of getNextStatus(cur, m)) {
+          if (!bankMap.has(nextStr) || seen.has(nextStr)) continue;
+          seen.add(nextStr);
+          let ans = dfs(nextStr, target, step + 1);
+          if (ans !== -1) return ans;
+      }
+      return -1;
+  }
+  return dfs(start, end, 0);
+};
+
+function getNextStatus(geneStr, m) {
+  debugger
+  let arr = Array.from(geneStr), nextStatus = [];
+  for (let i = 0; i < 8; i++) {
+      let t = [...arr], k = 0, nextChar = m.get(arr[i]);
+      for (let k = 0; k < 3; k++) {
+          t[i] = nextChar[k];
+          nextStatus.push(t.join(''));
+      }
+  }
+  return nextStatus;
+}
+
+const res =  minMutation("AACCTTGG", "AATTCCGG", ["AATTCCGG","AACCTGGG","AACCCCGG","AACCTACC"])
+console.log(res)

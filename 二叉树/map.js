@@ -911,5 +911,54 @@ var invertTree = function(root) {
 
         return root
     };
+// 1305. 两棵二叉搜索树中的所有元素
+// 因为 二叉搜索树特效， 左节点比 中节点小。 右节点比中节点大。 所以用中序遍历就可以完成 升序的排序， es6 可以合并并且排序。
+// 中序遍历， 左中右
+    var getAllElements = function(root1, root2) {
+        let res = []
+        function getNodeList (root, arr) {
+              if (!root) return arr;
+                getNodeList(root.left, arr);
+                arr.push(root.val);
+                getNodeList(root.right, arr);
+                return arr;
+        }
+       return res.concat(getNodeList(root1, []), getNodeList(root2, [])).sort((a, b) => {
+           return a-b
+       })
+    };
 
-    // 654.```
+// 450. 删除二叉搜索树中的节点
+// 给定一个二叉搜索树的根节点 root 和一个值 key，删除二叉搜索树中的 key 对应的节点，并保证二叉搜索树的性质不变。返回二叉搜索树（有可能被更新）的根节点的引用。
+
+// 一般来说，删除节点可分为两个步骤：
+
+// 首先找到需要删除的节点；
+// 如果找到了，删除它。
+var deleteNode = function (root, key) {
+    if (root === null)
+        return root;
+    if (root.val === key) {
+        if (!root.left)
+            return root.right;
+        else if (!root.right)
+            return root.left;
+        else {
+            let cur = root.right;
+            while (cur.left) {
+                cur = cur.left;
+            }
+            cur.left = root.left;
+            root = root.right;
+            delete root;
+            return root;
+        }
+    }
+    if (root.val > key)
+        root.left = deleteNode(root.left, key);
+    if (root.val < key)
+        root.right = deleteNode(root.right, key);
+    return root;
+};
+
+
