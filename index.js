@@ -630,7 +630,6 @@ MyCalendarThree.prototype.book = function(start, end) {
   this.times[start] = (this.times[start] || 0) + 1
   this.times[end] = (this.times[end] || 0) - 1
   let max = 0, total = 0
-  debugger
   for (const key in this.times) {
       total += this.times[key]
       if (total > max) {
