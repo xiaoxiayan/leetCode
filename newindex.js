@@ -55,7 +55,6 @@ var minEatingSpeed = function (piles, h) {
     let kmin = 1, kmax = Math.max(...piles);
     let target = 1;
     while (kmin <= kmax) {
-        debugger
         let time = 0;
         // 使用二分法去计算，中间值，然后算出吃香蕉的时间
         // 如果这个时间内，可以吃完香蕉，说明 target 肯定是小于等于 这个mid,
@@ -74,3 +73,25 @@ var minEatingSpeed = function (piles, h) {
     return target;
 };
 minEatingSpeed( [3,6,7,11] , 8)
+
+// 动态规划
+// 926. 将字符串翻转到单调递增
+var minFlipsMonoIncr = function(s) {
+    const n = s.length;
+    let dp0 = 0, dp1 = 0;
+    for (let i = 0; i < n; i++) {
+        const c = s[i];
+        debugger
+        let dp0New = dp0, dp1New = Math.min(dp0, dp1);
+        if (c === '1') {
+            dp0New++;
+        } else {
+            dp1New++;
+        }
+        dp0 = dp0New;
+        dp1 = dp1New;
+    }
+    return Math.min(dp0, dp1);
+};
+
+minFlipsMonoIncr('00110')
