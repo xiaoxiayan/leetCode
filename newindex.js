@@ -1,7 +1,6 @@
 function getRulesNum(target, arr ) {
   arr = arr.sort()
   let size = arr.length
-  console.log(arr)
   let res = ''
 
   // 找到 b + 2c
@@ -81,7 +80,6 @@ var minFlipsMonoIncr = function(s) {
     let dp0 = 0, dp1 = 0;
     for (let i = 0; i < n; i++) {
         const c = s[i];
-        debugger
         let dp0New = dp0, dp1New = Math.min(dp0, dp1);
         if (c === '1') {
             dp0New++;
@@ -106,9 +104,9 @@ minFlipsMonoIncr('00110')
 
 设对角线从上到下的编号为 i \in [0, m + n - 2]i∈[0,m+n−2]：
 
-当 ii 为偶数时，则第 ii 条对角线的走向是从下往上遍历；
-当 ii 为奇数时，则第 ii 条对角线的走向是从上往下遍历；
-当第 ii 条对角线从下往上遍历时，每次行索引减 11，列索引加 11，直到矩阵的边缘为止：
+当 i 为偶数时，则第 i 条对角线的走向是从下往上遍历；
+当 i 为奇数时，则第 i 条对角线的走向是从上往下遍历；
+当第 i 条对角线从下往上遍历时，每次行索引减 1，列索引加 1，直到矩阵的边缘为止：
 
 当 i < mi<m 时，则此时对角线遍历的起点位置为 (i,0)(i,0)；
 当 i \ge mi≥m 时，则此时对角线遍历的起点位置为 (m - 1, i - m + 1)(m−1,i−m+1)；
@@ -117,3 +115,74 @@ minFlipsMonoIncr('00110')
 当 i < n 时，则此时对角线遍历的起点位置为 (0, i)(0,i)；
 当 i >= 时，则此时对角线遍历的起点位置为 (i - n + 1, n - 1)(i−n+1,n−1)；
  */
+var findDiagonalOrder = function(mat) {
+    const m = mat.length;
+    const n = mat[0].length;
+    const res = new Array(m * n).fill(0);
+    let pos = 0;
+    for (let i = 0; i < m + n - 1; i++) {
+        // 算奇数和偶数
+        if (i % 2 === 1) {
+            // 奇数的时候
+            let x = i < n ? 0 : i - n + 1;
+            let y = i < n ? i : n - 1;
+            while (x < m && y >= 0) {
+                res[pos] = mat[x][y];
+                pos++;
+                x++;
+                y--;
+            }
+        } else {
+            // 偶数的时候
+            let x = i < m ? i : m - 1;
+            let y = i < m ? 0 : i - m + 1;
+            while (x >= 0 && y < n) {
+                res[pos] = mat[x][y];
+                pos++;
+                x--;
+                y++;
+            }
+        }
+    }
+    return res;
+};
+
+
+// 029 排序的循环链表
+
+ function Node(val, next) {
+   this.val = val;
+     this.next = next;
+  };
+
+
+var insert = function(head, insertVal) {
+    const node = new Node(insertVal);
+    if (!head) {
+        node.next = node;
+        return node;
+    }
+    if (head.next === head) {
+        head.next = node;
+        node.next = head;
+        return head;
+    }
+    let curr = head, next = head.next;
+    while (next !== head) {
+        if (insertVal >= curr.val && insertVal <= next.val) {
+            break;
+        }
+        if (curr.val > next.val) {
+            if (insertVal > curr.val || insertVal < next.val) {
+                break;
+            }
+        }
+        curr = curr.next;
+        next = next.next;
+    }
+    curr.next = node;
+    node.next = next;
+    return head;
+};
+
+insert([3,4,1], 2)
