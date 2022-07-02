@@ -185,4 +185,39 @@ var insert = function(head, insertVal) {
     return head;
 };
 
-insert([3,4,1], 2)
+// insert([3,4,1], 2)
+
+// 动态规划 871. 最低加油次数
+var minRefuelStops = function(target, startFuel, stations) {
+    // 动态规划， 循环 stations ，计算加油加油次数能达到的最大距离，
+    const len = stations.length
+    let dp = new Array(len + 1).fill(0)
+     // 初始化第一次，就是初始的油量
+     // dp - index 就是加油的次数
+     // dp - value 就是 加油次数可以到达的最大距离
+      dp[0] = startFuel
+      for(let i = 0; i < len; i++) {
+         //  循环 j， 更新每次到加油站可以用的油，计算出 最少次数可以到达的最大距离
+         // 从后往前去计算
+         // 所以使用 j--,
+         for(let j = i; j >= 0; j --) {
+             // 只有当前的油量大于 下一站的距离, 才能去计算
+             if(dp[j] >= stations[i][0]) {
+                 // 对比 j+1 和 当前 加完油以后的最大值，如果
+                 // 加完油以后，可以到达的最大距离
+                 dp[j+1] = Math.max(dp[j + 1], dp[j] + stations[i][1])
+                 debugger
+             }
+         }
+
+      }
+     for(let i = 0; i < dp.length; i++) {
+         if(dp[i] >= target) {
+             return i
+         }
+     }
+     return -1
+
+ };
+
+ minRefuelStops(100, 10, [[10,60],[20,30],[30,30],[60,40]])
