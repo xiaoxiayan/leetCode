@@ -220,4 +220,30 @@ var minRefuelStops = function(target, startFuel, stations) {
 
  };
 
- minRefuelStops(100, 10, [[10,60],[20,30],[30,30],[60,40]])
+//  minRefuelStops(100, 10, [[10,60],[20,30],[30,30],[60,40]])
+
+// 1252. 奇数值单元格的数目
+
+var oddCells = function(m, n, indices) {
+    let res = 0;
+    const matrix = new Array(m).fill(0).map(() => new Array(n).fill(0));
+    for (const index of indices) {
+        debugger
+        for (let i = 0; i < n; i++) {
+            matrix[index[0]][i]++;
+        }
+        for (let i = 0; i < m; i++) {
+            matrix[i][index[1]]++;
+        }
+    }
+    for (let i = 0; i < m; i++) {
+        for (let j = 0; j < n; j++) {
+            debugger
+            if ((matrix[i][j] & 1) !== 0) {
+                res++;
+            }
+        }
+    }
+    return res;
+};
+oddCells(2, 3, [[0,1],[1,1]])
