@@ -1,3 +1,5 @@
+
+
 function getRulesNum(target, arr ) {
   arr = arr.sort()
   let size = arr.length
@@ -220,4 +222,94 @@ var minRefuelStops = function(target, startFuel, stations) {
 
  };
 
- minRefuelStops(100, 10, [[10,60],[20,30],[30,30],[60,40]])
+//  minRefuelStops(100, 10, [[10,60],[20,30],[30,30],[60,40]])
+
+
+let Relation =  {
+    Father: '父辈',
+    Brother: '兄弟',
+    Son: '子辈'
+  }
+let treeData  = [
+    {
+      name : '爷爷',
+      lv: 1,
+      children : [
+        {
+          name: '父亲',
+          lv: 2,
+          children: [
+            {
+              name: '我',
+              lv: 3,
+              children: [
+                {
+                  name: '儿子',
+                  lv: 4
+                },
+
+              ]
+            },
+            {
+              name: '兄弟',
+              lv: 3,
+              children: [
+                {
+                  name: '兄弟儿子',
+                  lv: 4
+                }
+              ]
+            }
+          ]
+        },
+        {
+          name:'叔叔',
+          lv: 2
+        }
+
+      ]
+    },
+  ]
+
+  let flag = 0;
+
+  function findRelation(node, lv ) {
+    node.forEach(element => {
+      if(lv) {
+        element.label = getRelation(element.lv , lv)
+      }
+      if(element.name === '我') {
+         element.label = 'myself';
+        // 和我同级的都是兄弟
+        // 找到自己以后， 确定自己的 lv， 然后从头开始。 比 lv大的就是 子， 比lv 小的就是父， 和 lv一样的 就是兄弟
+         const mylv = element.lv;
+        //  只用跑一次就好
+        if(flag === 0) {
+            flag ++
+            findRelation(treeData, mylv);
+        }
+      }
+      if(element.children) {
+        findRelation(element.children, lv);
+      }
+    });
+  }
+  function getRelation (mylv, lv) {
+    let relation = ''
+    switch (true) {
+        case (mylv > lv) :
+            relation = Relation.Son;
+            break;
+        case (mylv < lv)  :
+            relation = Relation.Father;
+            break;
+        case (mylv === lv) :
+            relation = Relation.Brother;
+            break
+    }
+    return relation
+  }
+  findRelation(treeData);
+  console.log(treeData);
+
+
